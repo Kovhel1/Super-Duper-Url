@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+
+    <head>
+    
+        {% block head %}
+                <meta name="viewport" content="width=device-width, initial-scale=1">
+                <title>index.html</title>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+                <script type=text/javascript src="{{ url_for('static', filename='js/jquery-2.2.2.min.js') }}"></script>
+        {% endblock %}
+        
+    </head>
+
+    
+    <nav id="navbar" class="bd-navbar navbar has-shadow is-spaced">
+    
+        {%block nav%}
+            <div class="container">
+            <div class="navbar-brand">
+                <a class="navbar-item"  href = "{{url_for('index')}}">
+                    <img src="https://github.com/Kovhel1/Super-Duper-Url-/blob/master/pic.png?raw=true"  width="100" height="50">
+                </a>
+                <a class="navbar-item bd-navbar-item-videos " href = "{{url_for('index')}}">
+                    <span class="icon has-text-success">
+                    <i class="fas fa-play-circle"></i>
+                    </span>
+                    <span>Super Duper Url!</span>
+                </a>
+                <a class="navbar-item bd-navbar-item-expo "  href ="{{url_for('stats')}}">
+                    <span class="icon has-text-star">
+                    <i class="fas fa-star"></i>
+                    </span>
+                    <span>Statistic</span>
+                </a>
+            </div>
+            </div>
+        {%endblock%}
+        
+    </nav>
+
+
+    <body>
+    
+        {% block body %}
+        
+        {% endblock %}
+        
+    </body>
+    
+    
+</html>
