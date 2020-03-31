@@ -1,0 +1,45 @@
+
+
+{% extends "base.html"%}
+
+{% block body %}
+
+    <section class="section">
+        <div class="container">
+            <form method="POST" action="{{ url_for('add_link') }}">
+                <div class="field">
+                    <label class="label">Original URL</label>
+                    <div class="control">
+                        <input class="input" type="text" name="original_url">
+                    </div>
+
+                </div>
+                <div class="control">
+                    <button type="submit" class="button is-info">Short</button>
+                </div>
+
+            </form>
+        </div>
+    </section>
+    
+    <script>
+        $(function() {
+            $('form').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: $(this).attr('action'),
+                    data: $(this).serialize(),
+                    success: function(data) {
+                        data = '<div>' + data + '</div>';
+                        console.log($(data).find('section'));
+                        $('.section').replaceWith($(data).find('.section'));
+                        },
+                    error: function() {$('form').append('<div>Ошибка</div>');}
+                    });
+                });
+
+            });
+    </script>
+        
+{% endblock %}
