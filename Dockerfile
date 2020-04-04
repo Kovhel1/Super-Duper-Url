@@ -1,39 +1,27 @@
 #иногда пишут версию ubuntu
-FROM python:3.6.9-alpine
+FROM python:3.6.9
 
-#новый пользователь
-RUN adduser -D main
-
+#создается папка
+RUN mkdir -p /home/app/
 #куда будет установлено изображение
-WORKDIR /Домашняя папка/Рабочий стол/Super Duper Url
+WORKDIR /home/app
 
 #передает файлы с компьютера в файловую систему контейнера
 COPY requirements.txt requirements.txt
 
 #RUN эквиволентна командной строке
-RUN python3 -m venv venv
-RUN pip install -r requirements.txt
-#gunicorn будет испольоваться как веб-сервер
-RUN venv/bin/pip install gunicorn pymysql
+RUN pip install --upgrade pip && pip install -r requirements.txt
+RUN install gunicorn pymysql
 
 #устанавливают приложение в контейнер путем копирования пакета приложения
 COPY migrations migrations
 COPY static static
 COPY templates templates
 COPY db.sqlite3 db.sqlite3
-#COPY config.py config.py
-# boot.sh - обязательный файл для windows, не для ubuntu
-#COPY main.py config.py boot.sh ./
-COPY main.py config.py 
-#RUN chmod +x - так не работает
-#RUN chmod +x boot.sh
+COPY config.py config.py
+COPY main.py main.py 
 
-#переменная среды контейнера
+#переменная среды контейнера в compose
 ENV FLASK_APP main.py
 
-RUN chown -R main:main ./
-USER main
-
-EXPOSE 500
-
-#ENTRYPOINT ["./boot.sh"]
+EXPOSE 5000
