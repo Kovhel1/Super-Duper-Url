@@ -1,0 +1,25 @@
+#3 - последняя версия            
+version: '3'
+    #контейнеры
+     services:
+        #web - мое приложение без бд
+        web:
+            build: .
+            #ссылка на бд
+            links:
+                - "db:postgres"
+            #сопоставить внешний порт : с внутренним портом ?
+            ports:
+                - "8000:80"
+            #команда по умолчанию
+            command: python manage.py runserver 0.0.0.0:80
+            #в каталоге файл .env содержит единственную строчку FLASK APP=main.py
+            env_file: .env
+        #бд    
+        db:
+            database: db.sqlite3
+            image:postgres: latest
+            container_name: postgresdb
+            ports:
+                - 5432:5432
+            port: 127.0.0.1
