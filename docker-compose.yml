@@ -4,15 +4,19 @@ version: '3'
 services:
 #web - мое приложение без бд
     web:
-        image: super_duper_url
-        # - "db:postgres"
+        build: .
+        image: super_duper_url_web
         ports:
             - "5000:5000"
         #команда по умолчанию
         command: gunicorn -b :5000 --access-logfile - --error-logfile - main:app
         #в каталоге файл .env содержит единственную строчку FLASK APP=main.py
-        env_file: .flaskenv
-        #бд    
+        volumes:
+            - ./:/home/app
+        #env_file: .flaskenv
+        enviroment:
+            FLASK_APP: "main.py"
+    #бд    
     db:
         image: postgres:latest
-        container_name: super_duper_url.db
+        container_name: super_duper_url_db
